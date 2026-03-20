@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Aunty Mummy 💖</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* 🌌 ANIMATED BACKGROUND */
+.bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, #1a2a3a, #000);
+    overflow: hidden;
+}
+
+/* GLOW ORBS */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.4;
+    animation: float 12s infinite alternate ease-in-out;
+}
+
+@keyframes float {
+    from { transform: translateY(0px) translateX(0px);}
+    to { transform: translateY(-50px) translateX(30px);}
+}
+
+/* STARS */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    opacity: 0.7;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+}
+
+/* SCREEN */
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    z-index: 2;
+}
+
+/* TEXT */
+h1 {
+    font-size: 1.9em;
+    text-shadow: 0 0 15px gold, 0 0 30px gold;
+}
+
+button {
+    margin-top: 25px;
+    padding: 14px 24px;
+    font-size: 1em;
+    border: none;
+    border-radius: 30px;
+    background: gold;
+    color: black;
+    cursor: pointer;
+    box-shadow: 0 0 20px gold;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%,100% { box-shadow: 0 0 10px gold; }
+    50% { box-shadow: 0 0 30px gold; }
+}
+
+#main { display: none; }
+
+#message {
+    margin-top: 20px;
+    font-size: 1.05em;
+    line-height: 1.6em;
+    max-width: 90%;
+}
+
+/* HEARTS */
+.heart {
+    position: absolute;
+    font-size: 18px;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 1;}
+    to { transform: translateY(-10vh); opacity: 0;}
+}
+
+/* FIREWORKS */
+.firework {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: gold;
+    border-radius: 50%;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    to {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg" id="bg"></div>
+
+<!-- INTRO -->
+<div id="intro" class="screen">
+    <h1>🌙 Eid Mubarak & Happy Birthday 🎂</h1>
+    <p>Aunty Mummy 💖</p>
+    <button onclick="start()">Tap for your surprise 🎁</button>
+</div>
+
+<!-- MAIN -->
+<div id="main" class="screen">
+    <h1>✨ For You ✨</h1>
+    <div id="message"></div>
+</div>
+
+<audio id="sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=soft-piano-ambient-110397.mp3"></audio>
+
+<script>
+
+/* 🌌 BACKGROUND SETUP */
+const bg = document.getElementById("bg");
+
+/* stars */
+for (let i = 0; i < 70; i++) {
+    let s = document.createElement("div");
+    s.className = "star";
+    s.style.left = Math.random()*100+"vw";
+    s.style.top = Math.random()*100+"vh";
+    s.style.animationDuration = (1+Math.random()*2)+"s";
+    bg.appendChild(s);
+}
+
+/* glow orbs */
+for (let i = 0; i < 3; i++) {
+    let orb = document.createElement("div");
+    orb.className = "orb";
+    orb.style.width = orb.style.height = (150 + Math.random()*100)+"px";
+    orb.style.background = ["#ffcc00","#ff66cc","#66ccff"][i];
+    orb.style.left = Math.random()*100+"vw";
+    orb.style.top = Math.random()*100+"vh";
+    bg.appendChild(orb);
+}
+
+/* START */
+function start() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("main").style.display = "flex";
+
+    document.getElementById("sound").play();
+
+    typeMessage();
+    hearts();
+    fireworks();
+}
+
+/* 💬 TYPE MESSAGE */
+const text = `Eid Mubarak and Happy Birthday 🌙🎂
+
+You are truly a strong and proud woman,
+and honestly, the only woman I could ever call Aunty Mummy ❤️
+
+Your kindness, your strength, and the way you care for everyone
+does not go unnoticed.
+
+You mean more to us than words can ever fully express,
+and today is just a small reminder of how special you are.
+
+May your life always be filled with happiness,
+peace, and endless blessings ✨`;
+
+let i = 0;
+function typeMessage() {
+    let msg = document.getElementById("message");
+    if (i < text.length) {
+        msg.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeMessage, 30);
+    }
+}
+
+/* 💖 HEARTS */
+function hearts() {
+    setInterval(()=>{
+        let h = document.createElement("div");
+        h.className="heart";
+        h.innerHTML="💖";
+        h.style.left=Math.random()*100+"vw";
+        h.style.animationDuration=(4+Math.random()*2)+"s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),6000);
+    },500);
+}
+
+/* 🎆 FIREWORKS */
+function fireworks() {
+    setInterval(()=>{
+        let x=Math.random()*window.innerWidth;
+        let y=Math.random()*window.innerHeight/2;
+
+        for(let i=0;i<25;i++){
+            let f=document.createElement("div");
+            f.className="firework";
+
+            let angle=Math.random()*2*Math.PI;
+            let dist=Math.random()*100;
+
+            f.style.left=x+"px";
+            f.style.top=y+"px";
+            f.style.setProperty('--x',Math.cos(angle)*dist+"px");
+            f.style.setProperty('--y',Math.sin(angle)*dist+"px");
+
+            document.body.appendChild(f);
+            setTimeout(()=>f.remove(),1000);
+        }
+    },1200);
+}
+
+</script>
+
+</body>
+</html>
